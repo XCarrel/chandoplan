@@ -17,8 +17,8 @@ class CreateFailedJobsTable extends Migration {
 			$table->bigInteger('id', true)->unsigned();
 			$table->text('connection', 65535);
 			$table->text('queue', 65535);
-			$table->text('payload');
-			$table->text('exception');
+			$table->text('payload', 65535);
+			$table->text('exception', 65535);
 			$table->timestamp('failed_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 		});
 	}

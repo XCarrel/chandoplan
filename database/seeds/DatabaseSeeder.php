@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Domain;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        Domain::create(['name' => 'Cuisine']);
+        Domain::create(['name' => 'Ravitaillement']);
+        Domain::create(['name' => 'Service']);
+        Domain::create(['name' => 'ICT-120']);
+        Domain::create(['name' => 'ICT-404']);
+        Domain::create(['name' => 'ProjetWebBDD']);
+        Domain::create(['name' => 'ICT-226']);
+        Domain::create(['name' => 'Soirée']);
+        Domain::create(['name' => 'Extérieure']);
     }
 }
