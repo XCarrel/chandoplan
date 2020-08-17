@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container m-1">
         @if (session('status'))
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
             </div>
         @endif
-        <table class="table table-bordered">
+        <table class="table table-bordered w-100">
             <tr>
                 <th>Jour</th>
                 @foreach ($timeSlots as $ts)
