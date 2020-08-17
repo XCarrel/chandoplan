@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
         // Petit déjeuner
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '07:00'); })->get() as $slot) {
             Activity::create([
-                "description" => "Servir",
+                "description" => "Service petit déj",
                 "location" => "Cuisine",
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
@@ -78,10 +78,20 @@ class DatabaseSeeder extends Seeder
                 "slot_id" => $slot->id
             ]);
         }
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '08:00'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Rangements & Ravitaillement",
+                "location" => "Cuisine",
+                "minparticipants" => 2,
+                "maxparticipants" => 2,
+                "domain_id" => $supply->id,
+                "slot_id" => $slot->id
+            ]);
+        }
         // Midi
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '11:30'); })->get() as $slot) {
             Activity::create([
-                "description" => "Cuisiner",
+                "description" => "Préparation lunch",
                 "location" => "Cuisine",
                 "minparticipants" => 2,
                 "maxparticipants" => 2,
@@ -89,11 +99,21 @@ class DatabaseSeeder extends Seeder
                 "slot_id" => $slot->id
             ]);
             Activity::create([
-                "description" => "Servir",
+                "description" => "Service lunch",
                 "location" => "Cuisine",
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
                 "domain_id" => $serve->id,
+                "slot_id" => $slot->id
+            ]);
+        }
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '13:30'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Rangements & Ravitaillement",
+                "location" => "Cuisine",
+                "minparticipants" => 2,
+                "maxparticipants" => 2,
+                "domain_id" => $supply->id,
                 "slot_id" => $slot->id
             ]);
         }
@@ -118,11 +138,11 @@ class DatabaseSeeder extends Seeder
         }
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '19:00'); })->get() as $slot) {
             Activity::create([
-                "description" => "Servir",
+                "description" => "Rangements",
                 "location" => "Cuisine",
-                "minparticipants" => 4,
-                "maxparticipants" => 4,
-                "domain_id" => $serve->id,
+                "minparticipants" => 2,
+                "maxparticipants" => 2,
+                "domain_id" => $supply->id,
                 "slot_id" => $slot->id
             ]);
         }
