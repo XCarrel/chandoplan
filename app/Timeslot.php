@@ -11,6 +11,6 @@ class Timeslot extends Model
 
     public function slots()
     {
-        return $this->hasMany(Slot::class);
+        return $this->hasMany(Slot::class)->orderBy('date');
     }
 }

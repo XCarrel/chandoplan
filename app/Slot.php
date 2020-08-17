@@ -12,7 +12,7 @@ class Slot extends Model
 
     public function timeslot()
     {
-        return $this->belongsTo(Timeslot::class);
+        return $this->belongsTo(Timeslot::class)->orderBy('from');
     }
 
     public function activities()
