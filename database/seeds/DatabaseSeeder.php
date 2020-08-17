@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Domain;
 use App\Slot;
 use App\Timeslot;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,5 +33,33 @@ class DatabaseSeeder extends Seeder
         Timeslot::create(['from' => '17:00', 'to' => '19:00', 'mandatory' => 0]); // Service+Cuisine
         Timeslot::create(['from' => '19:00', 'to' => '20:00', 'mandatory' => 0]); // Service
         Timeslot::create(['from' => '20:30', 'to' => '23:00', 'mandatory' => 0]); // Social
+
+        // Arrival day
+        foreach (Timeslot::where('from','>=','17:00')->get() as $ts) {
+            $newslot = new Slot();
+            $newslot->date = Carbon::create(2020,9,21);
+            $newslot->timeslot()->associate($ts);
+            $newslot->save();
+        }
+
+        // Full days
+        foreach (Timeslot::all() as $ts) {
+            $basedate = Carbon::create(2020,9,22);
+            for ($i = 0; $i < 3; $i++) {
+                $newslot = new Slot();
+                $newslot->date = $basedate->addDays($i);
+                $newslot->timeslot()->associate($ts);
+                $newslot->save();
+            }
+        }
+
+        // Departure day
+        foreach (Timeslot::where('to','<=','08:00')->get() as $ts) {
+            $newslot = new Slot();
+            $newslot->date = Carbon::create(2020,9,21);
+            $newslot->timeslot()->associate($ts);
+            $newslot->save();
+        }
+
     }
 }
