@@ -10,19 +10,24 @@
         <table class="table table-bordered">
             <tr>
                 <th>Jour</th>
-                @foreach ($allSlots as $ts)
+                @foreach ($timeSlots as $ts)
                     <th>{{ \Carbon\Carbon::parse($ts->from)->format('H:i') }} - {{ \Carbon\Carbon::parse($ts->to)->format('H:i') }}</th>
                 @endforeach
             </tr>
             @foreach ($slotsArray as $date => $slots)
                 <tr>
                     <th>{{ Carbon\Carbon::parse($date)->format('D') }}</th>
-                    @foreach($allSlots as $slot)
-                        @if (isset($slots[\Carbon\Carbon::parse($slot->from)->format('H:i:s')]))
-                            <td class="text-center">X</td>
-                        @else
-                            <td>&nbsp;</td>
-                        @endif
+                    @foreach($timeSlots as $ts)
+                        <td class="text-center">
+                            @if (isset($slots[\Carbon\Carbon::parse($ts->from)->format('H:i:s')]))
+                                @php $activities = $slots[\Carbon\Carbon::parse($ts->from)->format('H:i:s')]; @endphp
+                                @if ($activities->count() > 0)
+                                    @foreach ($activities as $activity)
+                                        <div title="Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">{{ $activity->description }}</div>
+                                    @endforeach
+                                @endif
+                            @endif
+                        </td>
                     @endforeach
                 </tr>
             @endforeach
