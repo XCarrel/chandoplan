@@ -19,8 +19,8 @@ class CreateActivitiesTable extends Migration {
 			$table->string('location', 100)->nullable();
 			$table->integer('minparticipants')->nullable();
 			$table->integer('maxparticipants')->nullable();
-			$table->integer('timeslot_id')->index('fk_activities_timeslots_idx');
 			$table->integer('domain_id')->index('fk_activities_domains1_idx');
+			$table->integer('slot_id')->index('fk_activities_slots1_idx');
 		});
 	}
 

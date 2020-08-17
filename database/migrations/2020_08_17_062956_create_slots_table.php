@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTimeslotsTable extends Migration {
+class CreateSlotsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,11 @@ class CreateTimeslotsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('timeslots', function(Blueprint $table)
+		Schema::create('slots', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->dateTime('from');
-			$table->dateTime('to');
-			$table->boolean('mandatory')->default(0);
+			$table->date('date');
+			$table->integer('timeslot_id')->index('fk_slots_timeslots1_idx');
 		});
 	}
 
@@ -29,7 +28,7 @@ class CreateTimeslotsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('timeslots');
+		Schema::drop('slots');
 	}
 
 }

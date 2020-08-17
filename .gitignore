@@ -14,4 +14,4 @@ npm-debug.log
 yarn-error.log
 /config/*_rsa*
 /log/*
-*.mbw.bak
+*.mwb.bak
