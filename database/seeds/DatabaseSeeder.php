@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Domain;
 use App\Slot;
 use App\Timeslot;
+use App\Activity;
 use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
@@ -44,10 +45,10 @@ class DatabaseSeeder extends Seeder
 
         // Full days
         foreach (Timeslot::all() as $ts) {
-            $basedate = Carbon::create(2020,9,22);
+            $date = Carbon::create(2020,9,21);
             for ($i = 0; $i < 3; $i++) {
                 $newslot = new Slot();
-                $newslot->date = $basedate->addDays($i);
+                $newslot->date = $date->addDays(1);
                 $newslot->timeslot()->associate($ts);
                 $newslot->save();
             }
@@ -56,9 +57,74 @@ class DatabaseSeeder extends Seeder
         // Departure day
         foreach (Timeslot::where('to','<=','08:00')->get() as $ts) {
             $newslot = new Slot();
-            $newslot->date = Carbon::create(2020,9,21);
+            $newslot->date = Carbon::create(2020,9,25);
             $newslot->timeslot()->associate($ts);
             $newslot->save();
+        }
+
+        // Kitchen activities
+        $cook = Domain::where('name','Cuisine')->first();
+        $serve = Domain::where('name','Service')->first();
+        $supply = Domain::where('name','Ravitaillement')->first();
+
+        // Petit déjeuner
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '07:00'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Servir",
+                "location" => "Cuisine",
+                "minparticipants" => 6,
+                "maxparticipants" => 6,
+                "domain_id" => $serve->id,
+                "slot_id" => $slot->id
+            ]);
+        }
+        // Midi
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '11:30'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Cuisiner",
+                "location" => "Cuisine",
+                "minparticipants" => 2,
+                "maxparticipants" => 2,
+                "domain_id" => $cook->id,
+                "slot_id" => $slot->id
+            ]);
+            Activity::create([
+                "description" => "Servir",
+                "location" => "Cuisine",
+                "minparticipants" => 6,
+                "maxparticipants" => 6,
+                "domain_id" => $serve->id,
+                "slot_id" => $slot->id
+            ]);
+        }
+        // Soir
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '17:00'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Cuisiner",
+                "location" => "Cuisine",
+                "minparticipants" => 6,
+                "maxparticipants" => 6,
+                "domain_id" => $cook->id,
+                "slot_id" => $slot->id
+            ]);
+            Activity::create([
+                "description" => "Servir",
+                "location" => "Cuisine",
+                "minparticipants" => 6,
+                "maxparticipants" => 6,
+                "domain_id" => $serve->id,
+                "slot_id" => $slot->id
+            ]);
+        }
+        foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '19:00'); })->get() as $slot) {
+            Activity::create([
+                "description" => "Servir",
+                "location" => "Cuisine",
+                "minparticipants" => 4,
+                "maxparticipants" => 4,
+                "domain_id" => $serve->id,
+                "slot_id" => $slot->id
+            ]);
         }
 
     }
