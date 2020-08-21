@@ -10906,6 +10906,7 @@ a.text-dark:focus {
 
 .evening {
   background-color: #d878d0;
+  margin: 1px;
 }
 
 .job120,
@@ -10913,15 +10914,18 @@ a.text-dark:focus {
 .job404,
 .jobpweb {
   background-color: #d8af4a;
+  margin: 1px;
 }
 
 .service,
 .supply,
 .kitchen {
   background-color: #7ad875;
+  margin: 1px;
 }
 
 .outdoor {
   background-color: #8893d8;
+  margin: 1px;
 }
 
