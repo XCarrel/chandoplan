@@ -2,11 +2,6 @@
 
 @section('content')
     <div class="container m-1">
-        @if (session('status'))
-            <div class="alert alert-success" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
         <table class="table table-bordered w-100">
             <tr>
                 <th>Jour</th>
