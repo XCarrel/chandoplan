@@ -23,7 +23,7 @@
                                 @php $activities = $slots[\Carbon\Carbon::parse($ts->from)->format('H:i:s')]; @endphp
                                 @if ($activities->count() > 0)
                                     @foreach ($activities as $activity)
-                                        <div title="Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">{{ $activity->description }}</div>
+                                        <div class="{{ $activity->domain->slug }}" title="Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">{{ $activity->description }}</div>
                                     @endforeach
                                 @endif
                             @endif

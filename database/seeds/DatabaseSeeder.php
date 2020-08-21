@@ -16,15 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Domain::create(['name' => 'Cuisine']);
-        Domain::create(['name' => 'Ravitaillement']);
-        Domain::create(['name' => 'Service']);
-        Domain::create(['name' => 'ICT-120']);
-        Domain::create(['name' => 'ICT-404']);
-        Domain::create(['name' => 'ProjetWebBDD']);
-        Domain::create(['name' => 'ICT-226']);
-        Domain::create(['name' => 'Soirée']);
-        Domain::create(['name' => 'Extérieure']);
+        Domain::create(['name' => 'Cuisine', 'slug' => 'kitchen']);
+        Domain::create(['name' => 'Ravitaillement', 'slug' => 'supply']);
+        Domain::create(['name' => 'Service', 'slug' => 'service']);
+        Domain::create(['name' => 'ICT-120', 'slug' => 'job120']);
+        Domain::create(['name' => 'ICT-404', 'slug' => 'job404']);
+        Domain::create(['name' => 'ProjetWebBDD', 'slug' => 'jobpweb']);
+        Domain::create(['name' => 'ICT-226', 'slug' => 'job226']);
+        Domain::create(['name' => 'Soirée', 'slug' => 'evening']);
+        Domain::create(['name' => 'Extérieure', 'slug' => 'outdoor']);
 
         Timeslot::create(['from' => '07:00', 'to' => '08:00', 'mandatory' => 0]); // Service
         Timeslot::create(['from' => '08:00', 'to' => '09:30', 'mandatory' => 0]); // Cours / Activités

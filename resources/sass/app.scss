@@ -6,3 +6,23 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Activity domain classes
+.evening {
+    background-color: #d878d0;
+}
+.job120,
+.job226,
+.job404,
+.jobpweb{
+    background-color: #d8af4a;
+}
+.service,
+.supply,
+.kitchen{
+    background-color: #7ad875;
+}
+.outdoor{
+    background-color: #8893d8;
+}
+
