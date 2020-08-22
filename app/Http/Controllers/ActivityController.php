@@ -20,6 +20,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
         $domains = Domain::all();
         return view('activities.index')->with(compact('domains'));
     }
@@ -31,6 +32,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
         $act = new Activity();
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
@@ -47,6 +49,7 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
         // find the selected slot
         $slot = Slot::where('date', $request->input('day'))->where('timeslot_id', $request->input('timeslot'))->first();
         if ($slot == null) { // create new slot
@@ -92,6 +95,7 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         $act = Activity::find($id);
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
@@ -109,6 +113,7 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         // find the selected slot
         $slot = Slot::where('date', $request->input('day'))->where('timeslot_id', $request->input('timeslot'))->first();
         if ($slot == null) { // create new slot
@@ -142,6 +147,7 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit vandale ...']);
         $act = Activity::find($id);
         $act->delete();
         return redirect('activity')->with(['status' => 'Suppression OK']);
