@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container m-1">
-        <h2>Activité: {{ $act->description }} ({{ $act->domain->name }})</h2>
+        <h2>Activité: {{ $act->title }} ({{ $act->domain->name }})</h2>
         <div class="container mt-4 table-responsive text-center">
             <div class="form-row">
                 <label class="form-control bg-transparent col-2 border-0 text-right">Description</label>
-                <label class="form-control bg-transparent col-8 text-left">{{ $act->description }}</label>
+                <textarea rows="10" disabled class="form-control bg-transparent col-8 text-left">{{ $act->description }}</textarea>
             </div>
             <div class="form-row">
                 <label class="form-control bg-transparent col-2 border-0 text-right">Lieu</label>
@@ -24,14 +24,14 @@
             </div>
             <div class="form-row">
                 <label class="form-control bg-transparent col-2 border-0 text-right">Participants</label>
-                <label class="d-inline-block form-control bg-transparent col-8 text-left" rows="5">
+                <textarea rows="2" disabled class="form-control bg-transparent col-8">
                     @if ($act->users()->count() > 0)
-                        {{ implode(', ',$act->users()->pluck('name')->toArray()) }}
+{{ implode(', ',$act->users()->pluck('name')->toArray()) }}
                     @else
                         Aucun pour le moment.
                     @endif
-                    (minimum {{ $act->minparticipants }}, maximum {{ $act->maxparticipants }})
-                </label>
+(minimum {{ $act->minparticipants }}, maximum {{ $act->maxparticipants }})
+                </textarea>
             </div>
         </div>
         @if ($act->hasUser(Auth::user()))

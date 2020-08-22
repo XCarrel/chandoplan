@@ -1,8 +1,12 @@
 <div class="container mt-4 table-responsive text-center">
     <div class="jumbotron pt-2 pb-2">
         <div class="form-row">
+            <label class="form-control bg-transparent col-2 border-0 text-right">Titre</label>
+            <input type="text" name="title" class="form-control col-6" value="{{ $act->title }}" required>
+        </div>
+        <div class="form-row">
             <label class="form-control bg-transparent col-2 border-0 text-right">Description</label>
-            <input type="text" name="description" class="form-control col-6" value="{{ $act->description }}" required>
+            <textarea name="description" class="form-control col-6" rows="10" required>{{ $act->description }}</textarea>
         </div>
         <div class="form-row">
             <label class="form-control bg-transparent col-2 border-0 text-right">Lieu</label>

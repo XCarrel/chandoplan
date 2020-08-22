@@ -56,6 +56,7 @@ class ActivityController extends Controller
             $slot->save();
         }
         $newact = new Activity();
+        $newact->title = $request->input('title');
         $newact->description = $request->input('description');
         $newact->location = $request->input('location');
         $newact->minparticipants = $request->input('minp');
@@ -117,6 +118,7 @@ class ActivityController extends Controller
             $slot->save();
         }
         $act = Activity::find($id);
+        $act->title = $request->input('title');
         $act->description = $request->input('description');
         $act->location = $request->input('location');
         $act->minparticipants = $request->input('minp');
