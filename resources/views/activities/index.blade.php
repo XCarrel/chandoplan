@@ -8,7 +8,8 @@
             @foreach($domain->activities as $activity)
                 <div class="row m-1">
                     {{ $activity->description }}, {{ $activity->location }}, {{ $activity->minparticipants }}-{{ $activity->maxparticipants }} p., {{ \Carbon\Carbon::parse($activity->slot->date)->format('D') }} {{ \Carbon\Carbon::parse($activity->slot->timeslot->from)->format('H:i') }}
-                    <form method="post" action="activity/{{ $activity->id }}">@csrf @method('DELETE') <input type="submit" class="btn btn-sm btn-danger ml-3" value="-"></form>
+                    <form method="post" action="activity/{{ $activity->id }}">@csrf @method('DELETE') <button type="submit" class="btn btn-sm btn-danger ml-3"><i class="far fa-trash-alt"></i></button></form>
+                    <a class="btn btn-sm btn-primary" href="activity/{{ $activity->id }}/edit"><i class="far fa-edit"></i></a>
                 </div>
             @endforeach
         @endforeach

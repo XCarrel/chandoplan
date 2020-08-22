@@ -86,7 +86,11 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
-        //
+        $act = Activity::find($id);
+        $domains = Domain::all();
+        $slots = Slot::distinct()->get(['date']);
+        $timeslots = Timeslot::all();
+        return view('activities.edit')->with(compact('act', 'domains', 'slots', 'timeslots'));
     }
 
     /**
@@ -98,7 +102,27 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // find the selected slot
+        $slot = Slot::where('date', $request->input('day'))->where('timeslot_id', $request->input('timeslot'))->first();
+        if ($slot == null) { // create new slot
+            $slot = new Slot();
+            $slot->date = $request->input('day');
+            $slot->timeslot_id = $request->input('timeslot');
+            $slot->save();
+        }
+        $act = Activity::find($id);
+        $act->description = $request->input('description');
+        $act->location = $request->input('location');
+        $act->minparticipants = $request->input('minp');
+        $act->maxparticipants = $request->input('maxp');
+        $act->domain_id = $request->input('domain');
+        $act->slot_id = $slot->id;
+        try {
+            $act->save();
+            return redirect('activity')->with(['status' => 'Activité modifiée']);
+        } catch (\Exception $e) {
+            return redirect('activity')->with(['status' => "Erreur: les modifications n'ont pas pu être enregistrées"]);
+        }
     }
 
     /**

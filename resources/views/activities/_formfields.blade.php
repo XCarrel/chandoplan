@@ -26,7 +26,7 @@
             <label class="form-control bg-transparent col-2 border-0 text-right">Type</label>
             <select name="domain" class="form-control col-2">
                 @foreach($domains as $domain)
-                    <option value="{{$domain->id}}" {{ $act->domain ? ($act->domain->id == $act->id ? 'selected' : '') : '' }}>{{ $domain->name }}</option>
+                    <option value="{{$domain->id}}" {{ $act->domain ? ($act->domain->id == $domain->id ? 'selected' : '') : '' }}>{{ $domain->name }}</option>
                 @endforeach
             </select>
         </div>
