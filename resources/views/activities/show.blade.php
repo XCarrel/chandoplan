@@ -28,7 +28,7 @@
                     @if ($act->users()->count() > 0)
                         {{ implode(', ',$act->users()->pluck('name')->toArray()) }}
                     @else
-                        Aucun participant inscrit pour le moment.
+                        Aucun pour le moment.
                     @endif
                     (minimum {{ $act->minparticipants }}, maximum {{ $act->maxparticipants }})
                 </label>
