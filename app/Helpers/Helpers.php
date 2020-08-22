@@ -14,9 +14,9 @@ class Helpers
      */
     static function localeDayOfWeek($date)
     {
-        Carbon::setLocale(config('app.locale'));
+        $days = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
         try {
-            return Carbon::parse($date)->localeDayOfWeek;
+            return $days[Carbon::parse($date)->dayOfWeek];
         } catch (\Exception $e) {
             return "";
         }

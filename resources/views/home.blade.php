@@ -11,7 +11,7 @@
             </tr>
             @foreach ($slotsArray as $date => $slots)
                 <tr>
-                    <th>{{ Carbon\Carbon::parse($date)->format('D') }}</th>
+                    <th>{{ \App\Helpers\Helpers::localeDayOfWeek($date) }}</th>
                     @foreach($timeSlots as $ts)
                         <td class="text-center">
                             @if (isset($slots[\Carbon\Carbon::parse($ts->from)->format('H:i:s')]))
