@@ -38,6 +38,6 @@ class Activity extends Model
      */
     public function hasUser($user)
     {
-        return $this->users()->where('users.id',$user->id)->count() > 0;
+        return ($this->users()->where('users.id',$user->id)->count() > 0) || ($this->responsible->id == $user->id);
     }
 }
