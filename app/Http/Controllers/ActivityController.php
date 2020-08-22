@@ -6,6 +6,7 @@ use App\Activity;
 use App\Domain;
 use App\Slot;
 use App\Timeslot;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -33,7 +34,8 @@ class ActivityController extends Controller
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
         $timeslots = Timeslot::all();
-        return view('activities.create')->with(compact('act', 'domains', 'slots', 'timeslots'));
+        $users = User::all();
+        return view('activities.create')->with(compact('act', 'domains', 'slots', 'timeslots','users'));
     }
 
     /**
@@ -58,6 +60,7 @@ class ActivityController extends Controller
         $newact->minparticipants = $request->input('minp');
         $newact->maxparticipants = $request->input('maxp');
         $newact->domain_id = $request->input('domain');
+        $newact->user_id = $request->input('resp');
         $newact->slot_id = $slot->id;
         try {
             $newact->save();
@@ -90,7 +93,8 @@ class ActivityController extends Controller
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
         $timeslots = Timeslot::all();
-        return view('activities.edit')->with(compact('act', 'domains', 'slots', 'timeslots'));
+        $users = User::all();
+        return view('activities.edit')->with(compact('act', 'domains', 'slots', 'timeslots','users'));
     }
 
     /**
@@ -116,6 +120,7 @@ class ActivityController extends Controller
         $act->minparticipants = $request->input('minp');
         $act->maxparticipants = $request->input('maxp');
         $act->domain_id = $request->input('domain');
+        $act->user_id = $request->input('resp');
         $act->slot_id = $slot->id;
         try {
             $act->save();

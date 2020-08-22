@@ -23,6 +23,14 @@
             </select>
         </div>
         <div class="form-row">
+            <label class="form-control bg-transparent col-2 border-0 text-right">Responsable</label>
+            <select name="resp" class="form-control col-2">
+                @foreach($users as $user)
+                    <option value="{{ $user->id }}" {{ $act->responsible ? ($act->responsible->id == $user->id ? 'selected' : '') : (Auth::user()->id == $user->id ? 'selected' : '') }}>{{ $user->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-row">
             <label class="form-control bg-transparent col-2 border-0 text-right">Type</label>
             <select name="domain" class="form-control col-2">
                 @foreach($domains as $domain)
