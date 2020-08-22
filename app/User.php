@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Activity::class);
     }
+
+    public function responsibilities()
+    {
+        return $this->hasMany(Activity::class,'user_id');
+    }
 }

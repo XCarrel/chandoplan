@@ -25,4 +25,9 @@ class Activity extends Model
     {
         return $this->belongsTo(Slot::class);
     }
+
+    public function responsible()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
