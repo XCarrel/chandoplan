@@ -22,4 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('activity','ActivityController');
 Route::post('activity/{activity}/subscribe', 'ActivityController@subscribe')->name('activity.subscribe');
+Route::post('activity/{activity}/unsubscribe', 'ActivityController@unsubscribe')->name('activity.unsubscribe');
 

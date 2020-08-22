@@ -148,7 +148,14 @@ class ActivityController extends Controller
     public function subscribe(Request $request, $id)
     {
         $act = Activity::find($id);
-        $act->users()->attach(Auth::user());
-        return redirect('activity')->with(['status' => 'Inscription enregistrée']);
+        $act->users()->attach(Auth::user()->id);
+        return redirect('home')->with(['status' => 'Inscription enregistrée']);
+    }
+
+    public function unsubscribe(Request $request, $id)
+    {
+        $act = Activity::find($id);
+        $act->users()->detach(Auth::user()->id);
+        return redirect('home')->with(['status' => 'Désinscription enregistrée']);
     }
 }

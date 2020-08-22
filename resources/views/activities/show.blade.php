@@ -26,18 +26,40 @@
                 <label class="form-control bg-transparent col-2 border-0 text-right">Participants</label>
                 <label class="d-inline-block form-control bg-transparent col-8 text-left" rows="5">
                     @if ($act->users()->count() > 0)
+                        {{ implode(', ',$act->users()->pluck('name')->toArray()) }}
                     @else
                         Aucun participant inscrit pour le moment.
                     @endif
-                    (minimum {{ $act->minparticipants }}, maximun {{ $act->maxparticipants }})
+                    (minimum {{ $act->minparticipants }}, maximum {{ $act->maxparticipants }})
                 </label>
             </div>
         </div>
-        <form method="post" action="{{ route('activity.subscribe',$act->id) }}">
-            @csrf
-            <div class="form-row justify-content-center">
-                <input type="submit" class="btn btn-primary" value="Je m'inscris!">
-            </div>
-        </form>
+        @if ($act->hasUser(Auth::user()))
+            @if($act->users()->count() > $act->minparticipants)
+                <form method="post" action="{{ route('activity.unsubscribe',$act->id) }}">
+                    @csrf
+                    <div class="form-row justify-content-center">
+                        <input type="submit" class="btn btn-primary" value="Je me désinscris">
+                    </div>
+                </form>
+            @else
+                <div class="form-row justify-content-center">
+                    Désolé, la désinscription n'est pas possible
+                </div>
+            @endif
+        @else
+            @if($act->users()->count() < $act->maxparticipants)
+                <form method="post" action="{{ route('activity.subscribe',$act->id) }}">
+                    @csrf
+                    <div class="form-row justify-content-center">
+                        <input type="submit" class="btn btn-primary" value="Je m'inscris!">
+                    </div>
+                </form>
+            @else
+                <div class="form-row justify-content-center">
+                    Désolé, cette activité est complète
+                </div>
+            @endif
+        @endif
     </div>
 @endsection

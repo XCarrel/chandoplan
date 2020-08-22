@@ -30,4 +30,14 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    /**
+     * Returns true if $user has subscribed to the activity
+     * @param $user
+     * @return bool
+     */
+    public function hasUser($user)
+    {
+        return $this->users()->where('users.id',$user->id)->count() > 0;
+    }
 }
