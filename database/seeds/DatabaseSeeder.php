@@ -24,6 +24,13 @@ class DatabaseSeeder extends Seeder
         $me->level = 1;
         $me->save();
 
+        $him = new User();
+        $him->name = "Averell";
+        $him->email = "averell.dalton@cpnv.ch";
+        $him->password = password_hash('Pa$$w0rd',PASSWORD_BCRYPT);
+        $him->level = 0;
+        $him->save();
+
         Domain::create(['name' => 'Cuisine', 'slug' => 'kitchen']);
         Domain::create(['name' => 'Ravitaillement', 'slug' => 'supply']);
         Domain::create(['name' => 'Service', 'slug' => 'service']);

@@ -7,6 +7,7 @@ use App\Domain;
 use App\Slot;
 use App\Timeslot;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -142,5 +143,12 @@ class ActivityController extends Controller
         $act = Activity::find($id);
         $act->delete();
         return redirect('activity')->with(['status' => 'Suppression OK']);
+    }
+
+    public function subscribe(Request $request, $id)
+    {
+        $act = Activity::find($id);
+        $act->users()->attach(Auth::user());
+        return redirect('activity')->with(['status' => 'Inscription enregistrée']);
     }
 }
