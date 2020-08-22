@@ -18,7 +18,7 @@
                                 @php $activities = $slots[\Carbon\Carbon::parse($ts->from)->format('H:i:s')]; @endphp
                                 @if ($activities->count() > 0)
                                     @foreach ($activities as $activity)
-                                        <div class="{{ $activity->domain->slug }}" title="Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">
+                                        <div class="{{ $activity->domain->slug }} {{ $activity->hasUser(Auth::user()) ? 'myActivities' : '' }}" title="Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">
                                             <a href="{{ route('activity.show',$activity->id) }}" class="text-black-50 text-decoration-none">{{ $activity->description }}</a>
                                         </div>
                                     @endforeach

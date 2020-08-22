@@ -10929,3 +10929,7 @@ a.text-dark:focus {
   margin: 1px;
 }
 
+.myActivities {
+  border: 5px solid red;
+}
+
