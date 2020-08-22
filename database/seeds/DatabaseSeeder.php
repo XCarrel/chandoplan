@@ -5,6 +5,7 @@ use App\Domain;
 use App\Slot;
 use App\Timeslot;
 use App\Activity;
+use App\User;
 use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $me = new User();
+        $me->name = "Xavier";
+        $me->email = "xavier.carrel@cpnv.ch";
+        $me->password = password_hash('Pa$$w0rd',PASSWORD_BCRYPT);
+        $me->level = 1;
+        $me->save();
+
         Domain::create(['name' => 'Cuisine', 'slug' => 'kitchen']);
         Domain::create(['name' => 'Ravitaillement', 'slug' => 'supply']);
         Domain::create(['name' => 'Service', 'slug' => 'service']);
@@ -75,7 +83,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
                 "domain_id" => $serve->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '08:00'); })->get() as $slot) {
@@ -85,7 +94,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 2,
                 "maxparticipants" => 2,
                 "domain_id" => $supply->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
         // Midi
@@ -96,7 +106,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 2,
                 "maxparticipants" => 2,
                 "domain_id" => $cook->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
             Activity::create([
                 "description" => "Service lunch",
@@ -104,7 +115,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
                 "domain_id" => $serve->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '13:30'); })->get() as $slot) {
@@ -114,7 +126,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 2,
                 "maxparticipants" => 2,
                 "domain_id" => $supply->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
         // Soir
@@ -125,7 +138,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
                 "domain_id" => $cook->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
             Activity::create([
                 "description" => "Servir",
@@ -133,7 +147,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 6,
                 "maxparticipants" => 6,
                 "domain_id" => $serve->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
         foreach (Slot::whereHas('timeslot', function($q){ $q->where('from', '19:00'); })->get() as $slot) {
@@ -143,7 +158,8 @@ class DatabaseSeeder extends Seeder
                 "minparticipants" => 2,
                 "maxparticipants" => 2,
                 "domain_id" => $supply->id,
-                "slot_id" => $slot->id
+                "slot_id" => $slot->id,
+                "user_id" => $me->id
             ]);
         }
 

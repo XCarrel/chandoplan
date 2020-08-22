@@ -21,6 +21,7 @@ class CreateActivitiesTable extends Migration {
 			$table->integer('maxparticipants')->nullable();
 			$table->integer('domain_id')->index('fk_activities_domains1_idx');
 			$table->integer('slot_id')->index('fk_activities_slots1_idx');
+            $table->bigInteger('user_id')->unsigned()->index('fk_activities_has_resp_idx');
 		});
 	}
 

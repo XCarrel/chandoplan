@@ -16,6 +16,7 @@ class AddForeignKeysToActivitiesTable extends Migration {
 		{
 			$table->foreign('domain_id', 'fk_activities_domains1')->references('id')->on('domains')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('slot_id', 'fk_activities_slots1')->references('id')->on('slots')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('user_id', 'fk_activities_has_resp')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -30,7 +31,8 @@ class AddForeignKeysToActivitiesTable extends Migration {
 		Schema::table('activities', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_activities_domains1');
-			$table->dropForeign('fk_activities_slots1');
+            $table->dropForeign('fk_activities_slots1');
+            $table->dropForeign('fk_activities_has_resp');
 		});
 	}
 

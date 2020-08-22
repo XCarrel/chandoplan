@@ -14,8 +14,8 @@ class AddForeignKeysToActivityUserTable extends Migration {
 	{
 		Schema::table('activity_user', function(Blueprint $table)
 		{
-			$table->foreign('activity_id', 'fk_activities_has_users_activities1')->references('id')->on('activities')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-			$table->foreign('user_id', 'fk_activities_has_users_users1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('activity_id', 'fk_activities_has_users_activities1')->references('id')->on('activities')->onUpdate('NO ACTION')->onDelete('CASCADE');
+			$table->foreign('user_id', 'fk_activities_has_users_users1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('CASCADE');
 		});
 	}
 
