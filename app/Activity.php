@@ -40,4 +40,18 @@ class Activity extends Model
     {
         return ($this->users()->where('users.id',$user->id)->count() > 0) || ($this->responsible->id == $user->id);
     }
+
+    /**
+     * Tells how we are doing in terms of subscriptions to this activity
+     * @return  1 = we need more people
+     *          2 = we are full
+     *          3 = we accept subscriptions
+     */
+    public function audienceStatus()
+    {
+        $nbsubs = $this->users()->count();
+        if ($this->minparticipants != null && $nbsubs < $this->minparticipants) return 1;
+        if ($this->maxparticipants != null && $nbsubs >= $this->maxparticipants) return 2;
+        return 3;
+    }
 }

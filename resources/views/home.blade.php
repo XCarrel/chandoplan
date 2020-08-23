@@ -24,6 +24,18 @@
                                     @foreach ($activities as $activity)
                                         <div class="{{ $activity->domain->slug }} {{ $activity->hasUser(Auth::user()) ? 'myActivities' : 'notMyActivities' }}" title="{{ $activity->description }}. Lieu: {{ $activity->location }}, min {{ $activity->minparticipants }}pers., max {{ $activity->maxparticipants }}">
                                             <a href="{{ route('activity.show',$activity->id) }}" class="text-black-50 text-decoration-none">{{ $activity->title }}</a>
+                                            @switch($activity->audienceStatus())
+                                                @case(1)
+                                                <i class="fas fa-exclamation text-black-50"></i>
+                                                @break
+
+                                                @case(2)
+                                                <i class="fas fa-hand-paper text-black-50"></i>
+                                                @break
+
+                                                @default
+                                                <i class="fas fa-question text-black-50"></i>
+                                            @endswitch
                                         </div>
                                     @endforeach
                                 @endif
