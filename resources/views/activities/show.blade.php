@@ -49,12 +49,18 @@
             @endif
         @else
             @if($act->users()->count() < $act->maxparticipants)
-                <form method="post" action="{{ route('activity.subscribe',$act->id) }}">
-                    @csrf
+                @if (\App\User::find(Auth::user()->id)->isFree($act->slot))
+                    <form method="post" action="{{ route('activity.subscribe',$act->id) }}">
+                        @csrf
+                        <div class="form-row justify-content-center">
+                            <input type="submit" class="btn btn-primary" value="Je m'inscris!">
+                        </div>
+                    </form>
+                @else
                     <div class="form-row justify-content-center">
-                        <input type="submit" class="btn btn-primary" value="Je m'inscris!">
+                        Vous avez autre chose de prévu à ce moment-là
                     </div>
-                </form>
+                @endif
             @else
                 <div class="form-row justify-content-center">
                     Désolé, cette activité est complète

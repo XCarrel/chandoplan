@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Slot;
 use App\Timeslot;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {

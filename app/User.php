@@ -45,6 +45,21 @@ class User extends Authenticatable
 
     public function responsibilities()
     {
-        return $this->hasMany(Activity::class,'user_id');
+        return $this->hasMany(Activity::class, 'user_id');
+    }
+
+    /**
+     * Tells if this user is free (=has no activity planned) for a given slot
+     * @param Slot $slot
+     */
+    public function isFree(Slot $slot)
+    {
+        $nbact = $this->activities()->whereHas('slot', function ($s) use ($slot) {
+            $s->where('id', $slot->id);
+        })->count();
+        $nbresp = $this->responsibilities()->whereHas('slot', function ($s) use ($slot) {
+            $s->where('id', $slot->id);
+        })->count();
+        return ($nbact == 0 && $nbresp == 0);
     }
 }
