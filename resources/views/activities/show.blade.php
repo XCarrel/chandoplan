@@ -26,7 +26,7 @@
                 <label class="form-control bg-transparent col-2 border-0 text-right">Participants</label>
                 <textarea rows="2" disabled class="form-control bg-transparent col-8">
                     @if ($act->users()->count() > 0)
-{{ implode(', ',$act->users()->pluck('name')->toArray()) }}
+                        {{ implode(', ',$act->users()->pluck('name')->toArray()) }}
                     @else
                         Aucun pour le moment.
                     @endif
@@ -60,6 +60,14 @@
                     Désolé, cette activité est complète
                 </div>
             @endif
+        @endif
+        @if(Auth::user()->level > 0 || Auth::user()->id == $act->responsible->id)
+            <div class="row">
+                <a class="btn btn-primary ml-2" href="{{ route('activity.edit',$act->id) }}">Modifier</a>
+                <form method="post" action="{{ route('activity.destroy',$act->id) }}">@csrf @method('DELETE')
+                    <button type="submit" class="btn btn-danger ml-3">Supprimer</button>
+                </form>
+            </div>
         @endif
     </div>
 @endsection

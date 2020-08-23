@@ -38,6 +38,7 @@
                 <ul class="navbar-nav mr-auto">
                     <div id="divMyActivities" class="nav-item btn ml-5 btn-light">Mes activités</div>
                     <div id="divAllActivities" class="nav-item btn ml-5 btn-light d-none">Vue d'ensemble</div>
+                    <a href="activity/create" class="nav-item btn ml-3 btn-light">Proposer une activité</a>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -20,9 +20,6 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
-        $domains = Domain::all();
-        return view('activities.index')->with(compact('domains'));
     }
 
     /**
@@ -32,7 +29,6 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
         $act = new Activity();
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
@@ -49,7 +45,6 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit curieux ...']);
         // find the selected slot
         $slot = Slot::where('date', $request->input('day'))->where('timeslot_id', $request->input('timeslot'))->first();
         if ($slot == null) { // create new slot
@@ -69,9 +64,9 @@ class ActivityController extends Controller
         $newact->slot_id = $slot->id;
         try {
             $newact->save();
-            return redirect('activity')->with(['status' => 'Activité créée']);
+            return redirect('home')->with(['status' => 'Activité créée']);
         } catch (\Exception $e) {
-            return redirect('activity')->with(['status' => "Erreur: l'activité n'a pas pu être enregistrée"]);
+            return redirect('home')->with(['status' => "Erreur: l'activité n'a pas pu être enregistrée"]);
         }
     }
 
@@ -95,8 +90,8 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         $act = Activity::find($id);
+        if (Auth::user()->level < 1 && Auth::user()->id != $act->responsible->id) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         $domains = Domain::all();
         $slots = Slot::distinct()->get(['date']);
         $timeslots = Timeslot::all();
@@ -113,7 +108,8 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit malin ...']);
+        $act = Activity::find($id);
+        if (Auth::user()->level < 1 && Auth::user()->id != $act->responsible->id) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         // find the selected slot
         $slot = Slot::where('date', $request->input('day'))->where('timeslot_id', $request->input('timeslot'))->first();
         if ($slot == null) { // create new slot
@@ -122,7 +118,6 @@ class ActivityController extends Controller
             $slot->timeslot_id = $request->input('timeslot');
             $slot->save();
         }
-        $act = Activity::find($id);
         $act->title = $request->input('title');
         $act->description = $request->input('description');
         $act->location = $request->input('location');
@@ -133,9 +128,9 @@ class ActivityController extends Controller
         $act->slot_id = $slot->id;
         try {
             $act->save();
-            return redirect('activity')->with(['status' => 'Activité modifiée']);
+            return redirect('home')->with(['status' => 'Activité modifiée']);
         } catch (\Exception $e) {
-            return redirect('activity')->with(['status' => "Erreur: les modifications n'ont pas pu être enregistrées"]);
+            return redirect('home')->with(['status' => "Erreur: les modifications n'ont pas pu être enregistrées"]);
         }
     }
 
@@ -147,10 +142,10 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->level < 1) return (redirect('home'))->with(['status' => 'Petit vandale ...']);
         $act = Activity::find($id);
+        if (Auth::user()->level < 1 && Auth::user()->id != $act->responsible->id) return (redirect('home'))->with(['status' => 'Petit malin ...']);
         $act->delete();
-        return redirect('activity')->with(['status' => 'Suppression OK']);
+        return redirect('home')->with(['status' => 'Suppression OK']);
     }
 
     public function subscribe(Request $request, $id)
