@@ -46,4 +46,33 @@
             @endforeach
         </table>
     </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-sm ml-2 btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Aide
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content p-2">
+                <h2 class="text-center">Aide</h2>
+                <div class="row">
+                    <div class="col-5">
+                        <h4>Types d'activités</h4>
+                        @foreach($domains as $domain)
+                            <div class="{{ $domain->slug }} p-1">{{ $domain->name }}</div>
+                        @endforeach
+                    </div>
+                    <div class="col-6">
+                        <h4>Inscriptions</h4>
+                        <div class="{{ $domains[0]->slug }} p-1">Activité à laquelle je ne suis ni inscrit ni responsable</div>
+                        <div class="{{ $domains[0]->slug }} p-1 myActivities">Activité à laquelle je suis soit inscrit soir responsable</div>
+                        <div class="{{ $domains[0]->slug }} p-1">Activité qui a besoin d'inscriptions<i class="fas fa-exclamation text-black-50 float-right"></i></div>
+                        <div class="{{ $domains[0]->slug }} p-1">Activité qui accepte encore des inscriptions<i class="fas fa-question text-black-50 float-right"></i></div>
+                        <div class="{{ $domains[0]->slug }} p-1">Activité complète<i class="fas fa-hand-paper text-black-50 float-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
