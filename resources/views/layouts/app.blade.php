@@ -36,8 +36,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-                    <div id="divMyActivities" class="nav-item btn ml-5 btn-light">Mes activités</div>
+                    <div id="divMyActivities" class="nav-item btn ml-5 btn-light">Juste mes activités</div>
                     <div id="divAllActivities" class="nav-item btn ml-5 btn-light d-none">Vue d'ensemble</div>
+                    <a href="{{ route('allSchedules') }}" class="nav-item btn ml-3 btn-light">Plan des autres</a>
                     <a href="activity/create" class="nav-item btn ml-3 btn-light">Proposer une activité</a>
                 </ul>
 

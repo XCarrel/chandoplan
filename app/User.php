@@ -49,17 +49,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Tells if this user is free (=has no activity planned) for a given slot
+     * Tells what activity a user has subscribed to for the given slot, null if none
      * @param Slot $slot
      */
-    public function isFree(Slot $slot)
+    public function subscribedTo(Slot $slot)
     {
-        $nbact = $this->activities()->whereHas('slot', function ($s) use ($slot) {
+        $act = $this->activities()->whereHas('slot', function ($s) use ($slot) {
             $s->where('id', $slot->id);
-        })->count();
-        $nbresp = $this->responsibilities()->whereHas('slot', function ($s) use ($slot) {
+        })->first();
+        if ($act) return $act;
+        $resp = $this->responsibilities()->whereHas('slot', function ($s) use ($slot) {
             $s->where('id', $slot->id);
-        })->count();
-        return ($nbact == 0 && $nbresp == 0);
+        })->first();
+        return ($resp);
     }
 }

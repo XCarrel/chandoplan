@@ -49,7 +49,7 @@
             @endif
         @else
             @if($act->users()->count() < $act->maxparticipants)
-                @if (\App\User::find(Auth::user()->id)->isFree($act->slot))
+                @if (\App\User::find(Auth::user()->id)->subscribedTo($act->slot) == null)
                     <form method="post" action="{{ route('activity.subscribe',$act->id) }}">
                         @csrf
                         <div class="form-row justify-content-center">

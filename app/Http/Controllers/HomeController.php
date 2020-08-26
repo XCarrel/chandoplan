@@ -6,6 +6,8 @@ use App\Domain;
 use App\Slot;
 use App\Timeslot;
 use App\User;
+use Carbon\Carbon;
+use App\Helpers\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,5 +41,20 @@ class HomeController extends Controller
         }
         ksort($slotsArray); // because the resulting array is not necesseraly ordered by date. If there is no slot for the first timeslot of the first day, the first day won't be first in the arry
         return view('home')->with(compact('timeSlots','slotsArray','domains'));
+    }
+
+    /**
+     * Show the big plan: the schedule of every participant through every slot
+     */
+    public function allSchedules()
+    {
+        // Build a 2d associative array representing the whole plan: row = person, column = slot. The array has "holes", ie: some person/slot are undefined
+        $schedArray = [];
+        foreach(User::orderBy('name')->get() as $user) {
+            foreach(Slot::orderBy('date')->get() as $slot) {
+                $schedArray[$user->name][Helpers::localeDayOfWeek($slot->date)."<br>".Carbon::parse($slot->timeslot->from)->format('H:i')] = $user->subscribedTo($slot);
+            }
+        }
+        return view('allSchedules')->with(compact('schedArray'));
     }
 }
