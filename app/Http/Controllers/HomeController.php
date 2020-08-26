@@ -51,9 +51,12 @@ class HomeController extends Controller
         // Build a 2d associative array representing the whole plan: row = person, column = slot. The array has "holes", ie: some person/slot are undefined
         $schedArray = [];
         foreach(User::orderBy('name')->get() as $user) {
-            foreach(Slot::orderBy('date')->get() as $slot) {
-                $schedArray[$user->name][Helpers::localeDayOfWeek($slot->date)."<br>".Carbon::parse($slot->timeslot->from)->format('H:i')] = $user->subscribedTo($slot);
+            $userSched = [];
+            foreach(Slot::all() as $slot) {
+                $userSched[Carbon::parse($slot->date)->format('Y-m-d')." ".Carbon::parse($slot->timeslot->from)->format('H:i')] = $user->subscribedTo($slot);
             }
+            ksort($userSched);
+            $schedArray[$user->name]=$userSched;
         }
         return view('allSchedules')->with(compact('schedArray'));
     }

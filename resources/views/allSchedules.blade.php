@@ -9,8 +9,8 @@
         <table class="table table-bordered w-100">
             <tr>
                 <th></th>
-                @foreach ($schedArray[array_keys($schedArray)[0]] as $slot => $act)
-                    <th>{!! $slot !!}</th>
+                @foreach ($schedArray[array_keys($schedArray)[0]] as $date => $act)
+                    <th>{{ \App\Helpers\Helpers::localeDayOfWeek($date) }}<br>{{ \Carbon\Carbon::parse($date)->format('H:i') }}</th>
                 @endforeach
             </tr>
             @foreach ($schedArray as $name => $userSched)
